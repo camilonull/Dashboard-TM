@@ -17,30 +17,46 @@ export default function Router() {
     {
       element: (
         <DashboardLayout>
-          <Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
             <Outlet />
           </Suspense>
         </DashboardLayout>
       ),
       children: [
-        { element: <IndexPage />, index: true },
-        { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
-      ],
+        {
+          path: '/',
+          element: <IndexPage />
+        },
+        {
+          path: 'user',
+          element: <UserPage />
+        },
+        {
+          path: 'products',
+          element: <ProductsPage />
+        },
+        {
+          path: 'blog',
+          element: <BlogPage />
+        },
+        {
+          path: '*',
+          element: <Navigate to="/404" replace />
+        }
+      ]
     },
     {
       path: 'login',
-      element: <LoginPage />,
+      element: <LoginPage />
     },
     {
       path: '404',
-      element: <Page404 />,
+      element: <Page404 />
     },
     {
       path: '*',
-      element: <Navigate to="/404" replace />,
-    },
+      element: <Navigate to="/login" replace />
+    }
   ]);
 
   return routes;
